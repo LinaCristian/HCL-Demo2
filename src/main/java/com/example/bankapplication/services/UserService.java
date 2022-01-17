@@ -23,6 +23,11 @@ import java.util.stream.Collectors;
 public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
+    private Random random;
+
+    public UserService() {
+        this.random = new Random();
+    }
 
     @Override
     public UserResponseModel saveUser(UserRegistrationModel user) throws ResponseStatusException {
@@ -57,7 +62,7 @@ public class UserService implements IUserService {
                 Account.builder()
                         .balance(50.0)
                         .user(userToSave)
-                        .accountNumber(String.format("%08d", new Random().nextInt(99999999)))
+                        .accountNumber(String.format("%08d", random.nextInt(99999999)))
                         .build()));
 
         userRepository.save(userToSave);
